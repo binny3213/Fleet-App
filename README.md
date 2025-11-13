@@ -15,10 +15,8 @@ It consists of:
   - Main page: sortable table of fleets (always sorted, as required).
   - Fleet page:
     - Table of vessels (with server-side filtering by name, flag, MMSI).
-    - Map showing all vessels’ locations for the selected fleet.
+    - Map showing all vessels locations for the selected fleet.
     - Clicking a marker opens a popup with vessel information and location details.
-
-Map is implemented with **React-Leaflet** using OpenStreetMap tiles.
 
 ---
 
