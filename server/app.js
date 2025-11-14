@@ -47,7 +47,12 @@ app.get('/api/vessels/search', (req, res) => {
   }
 
   let list = fleet.vessels
-    .map((item) => vesselsById.get(item._id))
+    .map((item) => {
+      const vessel = vesselsById.get(item._id);
+      if (!vessel) return null;
+      const location = locationsById.get(item._id);
+      return { ...vessel, value: item.value, location };
+    })
     .filter(Boolean);
 
   if (name) {
