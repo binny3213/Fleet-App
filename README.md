@@ -1,6 +1,14 @@
 # Fleet Monitor – Technical Assignment
 
-This project is a small full-stack app for monitoring fleets and vessels, built as a technical assignment.
+This project is a full-stack app for monitoring fleets and vessels, built as a technical assignment.
+
+---
+### 🎥 Project Walkthrough Video
+<a href="https://youtu.be/abvJRkGbg3s" target="_blank">
+  <img src="https://img.shields.io/badge/Watch%20Video%20📺-on%20YouTube-red?logo=youtube" alt="Watch on YouTube">
+</a>
+
+---
 
 It consists of:
 
