@@ -10,7 +10,7 @@ This project is a full-stack app for monitoring fleets and vessels, built as a t
 
 ---
 
-It consists of:
+The Project consists of:
 
 - **Backend** – Node.js + Express  
   - Loads static JSON files (`fleets`, `vessels`, `vesselLocations`) into memory.
