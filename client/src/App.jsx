@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Routes, Route, Link } from 'react-router-dom';
 import FleetsPage from './pages/FleetsPage.jsx';
 import FleetPage from './pages/FleetPage.jsx';
