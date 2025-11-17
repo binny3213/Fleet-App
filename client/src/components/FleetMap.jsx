@@ -1,5 +1,6 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup,  useMap } from 'react-leaflet';
 import L from 'leaflet';
+import { useEffect } from 'react';
 
 const defaultIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -9,7 +10,23 @@ const defaultIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-export default function FleetMap({ vessels }) {
+function MapFocus({ vessel }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!vessel || !vessel.location || !vessel.location.lastpos) return;
+    const coords = vessel.location.lastpos.geometry?.coordinates;
+    if (!Array.isArray(coords) || coords.length < 2) return;
+
+    const [lon, lat] = coords;
+
+    map.flyTo([lat, lon], 6, { duration: 0.7 });
+  }, [vessel, map]);
+
+  return null; 
+}
+
+export default function FleetMap({ vessels, selectedVessel }) {
   const vesselsWithLocation = vessels.filter(
     (v) =>
       v.location &&
@@ -33,6 +50,8 @@ export default function FleetMap({ vessels }) {
           attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {selectedVessel && <MapFocus vessel={selectedVessel} />}
 
         {vesselsWithLocation.map((v) => {
           const [lon, lat] = v.location.lastpos.geometry.coordinates;

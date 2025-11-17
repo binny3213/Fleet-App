@@ -8,6 +8,7 @@ export default function FleetPage() {
   const [displayed, setDisplayed] = useState([]);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({ name: '', mmsi: '', flag: '' });
+  const [selectedVessel, setSelectedVessel] = useState(null);
 
   useEffect(() => {
     fetch(`/api/fleets/${fleetId}/vessels`)
@@ -15,6 +16,7 @@ export default function FleetPage() {
       .then((data) => {
         setVessels(data);
         setDisplayed(data);
+        setSelectedVessel(null);
       })
       .catch((err) => setError(err.message));
   }, [fleetId]);
@@ -29,6 +31,7 @@ export default function FleetPage() {
     const any = Object.values(filters).some((v) => v.trim() !== '');
     if (!any) {
       setDisplayed(vessels);
+      setSelectedVessel(null);
       return;
     }
     const params = new URLSearchParams({ fleetId });
@@ -98,7 +101,11 @@ export default function FleetPage() {
           </thead>
           <tbody>
             {displayed.map((v) => (
-              <tr key={v._id}>
+              <tr
+                key={v._id}
+                onClick={() => setSelectedVessel(v)}  
+                className={selectedVessel && selectedVessel._id === v._id ? 'selected-row' : ''}
+              >
                 <td>{v.name}</td>
                 <td>{v.mmsi || '—'}</td>
                 <td>{v.flag || '—'}</td>
@@ -111,7 +118,7 @@ export default function FleetPage() {
 
       <div className="card">
         <h2>Map</h2>
-        <FleetMap vessels={displayed} />
+        <FleetMap vessels={displayed} selectedVessel={selectedVessel} />
       </div>
     </div>
   );

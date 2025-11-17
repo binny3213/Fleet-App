@@ -16,7 +16,6 @@ app.get('/api/fleets', (req, res) => {
   res.json(result);
 });
 
-
 app.get('/api/fleets/:id/vessels', (req, res) => {
   const fleetId = req.params.id;
   const fleet = fleets.find((f) => f._id === fleetId);
@@ -47,7 +46,12 @@ app.get('/api/vessels/search', (req, res) => {
   }
 
   let list = fleet.vessels
-    .map((item) => vesselsById.get(item._id))
+    .map((item) => {
+      const vessel = vesselsById.get(item._id);
+      if (!vessel) return null;
+      const location = locationsById.get(item._id);
+      return { ...vessel, value: item.value, location };
+    })
     .filter(Boolean);
 
   if (name) {
@@ -73,7 +77,6 @@ app.get('/api/vessels/search', (req, res) => {
 
   res.json(list); 
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
